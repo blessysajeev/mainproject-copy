@@ -1,0 +1,158 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <style>
+        /* CSS styles go here */
+        form {
+          width: 400px;
+          margin: 20px auto;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #f2f2f2;
+          text-align: center;
+        }
+        label {
+          display: block;
+          margin-bottom: 10px;
+          font-weight: bold;
+          font-size: 1.2rem;
+        }
+        select,
+        input[type="text"],
+        input[type="number"] {
+          display: block;
+          width: 90%;
+          padding: 10px;
+          margin-bottom: 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            margin-top: 20px;
+        }
+    
+        button:hover {
+            background-color: #2980b9;
+        }
+      </style> 
+      <!-- <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+    
+        select, input[type="number"], input[type="text"] {
+            font-size: 1rem;
+            padding: 8px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+    
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            margin-top: 20px;
+        }
+    
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style> -->
+</head>
+<body>
+    {% block content %}
+    <h1 align="center">Car Loan EMI Calculator</h1>
+    <form method="post" action="{% url 'car_loan_emi' %}">
+        {% csrf_token %}
+        <label for="bank">Bank:</label>
+        <select name="bank" id="bank" required>
+            <option value="">Select a bank</option>
+            {% for bank in banks %}
+                <option value="{{ bank.id }}" data-interest-rate="{{ bank.interest_rate }}">{{ bank.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <!-- <label for="down_payment">Down Payment:</label>
+        <input type="number" id="down_payment" name="down_payment" required>
+         -->
+        <label for="loan_amount">Loan amount:</label>
+        <input type="number" id="loan_amount" name="loan_amount"  required>
+
+        <label for="loan_tenure">Loan tenure (in years):</label>
+        <input type="number" name="loan_tenure" id="loan_tenure" required>
+
+        <label for="interest_rate">Interest rate:</label>
+        <input type="text" name="interest_rate" id="interest_rate" readonly>
+        <br>
+        <button type="submit">Calculate EMI</button>
+    </form>
+
+    <script>
+        var bankSelect = document.getElementById('bank');
+        var interestRateInput = document.getElementById('interest_rate');
+
+        bankSelect.addEventListener('change', function() {
+            var bankOption = this.options[this.selectedIndex];
+            var interestRate = bankOption.getAttribute('data-interest-rate');
+            interestRateInput.value = interestRate;
+        });
+    </script>
+    <script>
+        const downPaymentInput = document.getElementById('down_payment');
+        const loanAmountInput = document.getElementById('loan_amount');
+    
+        downPaymentInput.addEventListener('input', function() {
+            const downPayment = this.value;
+            const carPrice = 1000000;  // replace with actual car price
+            const loanAmount = carPrice - downPayment;
+            loanAmountInput.value = loanAmount;
+        });
+    </script>
+    
+
+{% if emi_amount %}
+<h2>EMI: {{ emi_amount }}</h2>
+{% endif %}
+
+{% endblock %}
+</body>
+</html>
+

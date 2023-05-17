@@ -1,0 +1,28 @@
+/* leavestatus.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .leave-application {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    color: #333;
+  }
+  
+  p {
+    margin: 10px 0;
+  }
+  
+  .no-applications {
+    color: #777;
+  }
+  

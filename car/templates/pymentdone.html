@@ -1,0 +1,35 @@
+
+
+{% load static %}
+<html>
+    <head>
+        <style>
+            img {
+        border-radius: 50%;
+        height: 250px;
+        width: 250px;
+        }
+
+        </style>
+        </head>
+    <body>
+    <form method="POST">
+        {% block content %}
+        <center><img src="{% static 'img/check.webp' %}">
+        <h1>Payment Successful</h1>
+           
+        <!-- {% if payment.invoice_url %} -->
+        <h4></h4><a href="{% url 'download_invoice' payment.id %}" download="{{download_invoice}}{{payment.id}}">Download your invoice here!</a>
+    <!-- {% endif %} -->
+    <br>
+            <br>
+            <p>Thank you for your payment!<a href="{% url 'index' %}"> Click Here </a> to return home</p>
+        </form>
+
+        </center> 
+
+
+
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,63 @@
+{% load static %}
+
+
+<html>
+    <body>
+<div class="container">
+    {% for msg in messages %}
+<!-- <div class="alert alert-warning" role="alert"> -->
+    {{msg}}
+</div>
+{% endfor %}
+</div>
+<center><h2>Appointment Review</h2> 
+
+    
+
+    {% if obj %}
+<table class="table table-hover" border="2" style="width:60%">
+
+ <thead>
+    <tr>
+
+        
+        <th scope="col">carmodel</th>
+        <th scope="col">visitdate</th>
+        <th scope="col">visittime</th>
+        <th scope="col">delete</th>
+        
+    </tr>
+  </thead>
+  <tbody align="center">
+    {% for i in obj %}
+    <tr>
+
+        
+        <td>{{i.carmodel}}</td>
+        <td>{{i.visitdate}}</td>
+        <td><span class="badge text-bg-dark">{{i.visittime}}</span></td>
+        <td>
+             <!-- <a href="" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>  -->
+            <a href="/delete/{{i.id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"  title="Delete">Delete</i></a>  
+           <!-- <button type="button" class="btn btn-warning btn-sm">Edit</button> -->
+           <!-- <button type="button" class="btn btn-danger btn-sm">Delete</button> -->
+           <!-- <form action="" method="post" class="d-inline"> -->
+               <!-- <button type="button" class="btn btn-danger btn-sm">Delete</button> -->
+       <!-- </form>  -->
+
+
+        </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<!-- <strong>Note :</strong>  -->
+<!-- This appointment hasn't been set yet. We will contact you shortly to confirm your appointment. -->
+    {% else %}
+    <h4 class="text-center alert alert-warning">No records</h4>
+    {% endif %} 
+ </center>
+
+</body>
+</html>

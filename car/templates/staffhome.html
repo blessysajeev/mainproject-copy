@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tars cars Free Bootstrap Theme | webthemez</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="http://webthemez.com" />
+<!-- css -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/fancybox/jquery.fancybox.css' %}" rel="stylesheet">
+<link href="{% static 'css/jcarousel.css' %}" rel="stylesheet" />
+<link href="{% static 'css/flexslider.css' %}" rel="stylesheet" />
+<link href="{% static 'js/owl-carousel/owl.carousel.css' %}" rel="stylesheet"> 
+<link href="{% static 'css/style.css' %}" rel="stylesheet" />
+ 
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<div id="wrapper">
+	<!-- start header -->
+	<header>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img\logo.jpg' %}" alt="logo"/></a>
+                </div>
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="{% url 'staffhome' %}">Home</a></li> 
+                        <li><a href="{% url 'apply_leave' %}">Apply Leave</a></li>
+                        <li><a href="{% url 'leavestatus' %}">Leave Status</a></li>
+
+						
+                        
+                        
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{request.session.username}} <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Profile</a></li>
+                  
+                  <li><a href="{% url 'change_password' %}">Change Password</a></li>
+                  <!-- <li class="divider"></li> -->
+                  <li><a href="{% url 'logout' %}">Logout</a></li>
+                  <!-- <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li> -->
+                </ul>
+              </li>
+            </ul>
+           
+           
+                  <!-- <li><a href="#">Change Password</a></li> -->
+                  <!-- <li class="divider"></li> -->
+                  <!-- <li><a href="#">Logout</a></li> -->
+                  <!-- <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li> -->
+                </ul>
+              </li>
+		
+                    </ul>
+                </div>
+            </div>
+        </div>
+	</header>
+
+
+
+<section class="callaction">
+<div class="container">
+    <div class="row">
+    <div class="col-md-4">
+    <img src="{% static 'img/people.png' %}" alt="" width="100%"/>
+    </div>
+        <div class="col-md-8">
+            <div><h1><span>Hello,<span class="blue_text">Welcome Back!!</span></span></h1><span class="clear spacer_responsive_hide_mobile " style="height:13px;display:block;"></span><p>“Becoming is better than being.” —Carol Dweck, Mindset</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</section>
+
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title">Staff Assignments</h1>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Slno</th>
+          <th>Customer Name</th>
+          <th>Customer Email</th>
+          <th>Customer Phone</th>
+          <!-- <th>Actions</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for assignment in assignments %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ assignment.customer.username }}</td>
+            <td>{{ assignment.customer.email }}</td>
+            <td>{{ assignment.customer.phone }}</td>
+            <!-- <td>
+              <a href="{% url 'customer_details' assignment.id %}" class="btn btn-sm btn-danger">View Details</a>
+            </td> -->
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+  
+
+
+<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+<!-- javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.pack.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox-media.js' %}"></script> 
+<script src="{% static 'js/portfolio/jquery.quicksand.js' %}"></script>
+<script src="{% static 'js/portfolio/setting.js' %}"></script>
+<script src="{% static 'js/jquery.flexslider.js' %}"></script>
+<script src="{% static 'js/animate.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script src="{% static 'js/owl-carousel/owl.carousel.js' %}"></script>
+</body>
+</html>

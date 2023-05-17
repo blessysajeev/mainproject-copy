@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <title>Book</title>
+    <style>
+        /* CSS styles go here */
+        form {
+          width: 400px;
+          margin: 20px auto;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #f2f2f2;
+          text-align: center;
+        }
+        label {
+          display: block;
+          margin-bottom: 10px;
+          font-weight: bold;
+          font-size: 1.2rem;
+        }
+        select,
+        input[type="text"],
+        input[type="number"] {
+          display: block;
+          width: 90%;
+          padding: 10px;
+          margin-bottom: 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            margin-top: 20px;
+        }
+    
+        button:hover {
+            background-color: #2980b9;
+        }
+      </style> 
+</head>
+<body>
+  
+    <form method="POST" action="{% url 'paydone' %}">
+		{% csrf_token %}
+
+        <h2>Product name : {{lst.name}}</h2>
+        <h2>Product price : {{lst.exshowroomprice}}</h2>
+        <h2>Company : maruthi</h2>
+        <h2>Downpayment:{{ down_payment }}</h2>
+      <!-- <label for="down_payment">downPayment Amount:</label>
+        <input type="number" name="down_payment" id="down_payment" required>
+        <h4>Minimum downpayment amount is 20000 </h4> -->
+      <button id="rzp-button1" type="submit" class="submit-btn">PAYMENT</button>
+
+		
+	<script>
+
+		var options = {
+		  "key": "rzp_test_wT8W2jNy560ysZ", // Enter the Key ID generated from the Dashboard
+		  "amount": '{{amount}}', // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+		  "currency": "INR",
+		  "name": "car showroom",
+		  "description": "Test Transaction",
+		  "image": "https://example.com/your_logo",
+		  "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+		  "handler": function (response){
+		   console.log(
+			  {
+				razorpay_payment_id:response.razorpay_payment_id,
+				razorpay_order_id:response.razorpay_order_id,
+				razorpay_signature:response.razorpay_signature
+			  }
+
+			);
+		
+			var form = document.getElementById["myform"];
+				var a = response.razorpay_payment_id;
+				window.location.href = `http://127.0.0.1:8000/paydone?signature=${response.razorpay_signature}&payment_id=`+a
+				
+			  
+		  },
+		  "prefill": {
+			  "name": "Gaurav Kumar",
+			  "email": "gaurav.kumar@example.com",
+			  "contact": "9000090000"
+		  },
+		  "theme": {
+			  "color": "#3399cc"
+		  }
+	  };
+    
+	  var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+  alert(response.error.code);
+  alert(response.error.description);
+  alert(response.error.source);
+  alert(response.error.step);
+  alert(response.error.reason);
+  alert(response.error.metadata.order_id);
+  alert(response.error.metadata.payment_id);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+	rzp1.open();
+	e.preventDefault();
+}
+ </script>
+    </form>
+    
+    
+</body>
+</html>

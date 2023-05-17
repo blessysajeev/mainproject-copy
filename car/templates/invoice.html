@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+    <style type="text/css">
+        /* Define some styles for the invoice */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        h1 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .invoice {
+            width: 80%;
+            margin: auto;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .company-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .customer-info {
+            margin-bottom: 20px;
+        }
+        .payment-info {
+            margin-bottom: 20px;
+        }
+        .items {
+            margin-bottom: 20px;
+        }
+        .total {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice">
+        <div class="logo">
+            <img src="" alt="Company Logo">
+            <h1>Invoice</h1>
+        </div>
+        
+        <div class="customer-info">
+            <p><strong>Customer Name:</strong> {{ payment.user.username }}</p>
+            <p><strong>Email:</strong> {{ payment.user.email }}</p>
+        </div>
+        <div class="payment-info">
+            <p><strong>Payment ID:</strong> {{ payment.razorpay_order_id }}</p>
+            <p><strong>Amount Paid:</strong> {{ payment.amount }}</p>
+            <p><strong>Date:</strong> {{ payment.payment_date }}</p>
+        </div>
+    
+        <div class="items">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ lst.name }}</td>
+                        <td>{{ lst.exshowroomprice }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="total">
+            <p><strong>Total:</strong> {{ payment.amount }}</p>
+        </div>
+    </div>
+</body>
+</html>

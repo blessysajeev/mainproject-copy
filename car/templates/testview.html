@@ -1,0 +1,104 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view</title>
+</head>
+<body>
+    <body>
+        <div>
+            <a href="{% url 'index' %}" class="nav-link"><b>BACK</b></a>
+         </div>
+<div class="container">
+    {% for msg in messages %}
+<div class="alert alert-warning" role="alert">
+    {{msg}}
+</div>
+{% endfor %}
+</div>
+<center><h2><u>Appointment Review</u></h2>
+
+    <h3>testdrive</h3>
+
+    {% if obj %}
+<table class="table table-hover" border="2" style="width:60%">
+
+ <thead>
+    <tr>
+
+        
+        <th scope="col">carmodel</th>
+        <th scope="col">testdate</th>
+        <th scope="col">testtime</th>
+        <th scope="col">delete</th>
+        
+    </tr>
+  </thead>
+  <tbody align="center">
+    {% for f in obj %}
+    <tr>
+        <td>{{f.carmodel}}</td>
+        <td>{{f.testdate}}</td>
+        <td><span class="badge text-bg-dark">{{f.testtime}}</span></td>
+        <td>
+             <!-- <a href="" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>  -->
+            <a href="/delete/{{f.id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"  title="Delete">Delete</i></a>  
+           <!-- <button type="button" class="btn btn-warning btn-sm">Edit</button> -->
+           <!-- <button type="button" class="btn btn-danger btn-sm">Delete</button> -->
+           <!-- <form action="" method="post" class="d-inline"> -->
+               <!-- <button type="button" class="btn btn-danger btn-sm">Delete</button> -->
+       <!-- </form>  -->
+
+
+        </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+<h4 class="text-center alert alert-warning">No records</h4>
+{% endif %} 
+</center>
+
+<center>
+    <h3>Showroom visit</h3>
+
+    {% if obje %}
+    <table class="table table-hover" border="2" style="width:60%">
+
+        <thead>
+            <tr>
+                <th scope="col">carmodel</th>
+                <th scope="col">visitdate</th>
+                <th scope="col">visittime</th>
+                <th scope="col">delete</th>
+            </tr>
+        </thead>
+        <tbody align="center">
+            {% for f in obje %}
+            <tr>
+                <td>{{f.carmodel}}</td>
+                <td>{{f.visitdate}}</td>
+                <td><span class="badge text-bg-dark">{{f.visittime}}</span></td>
+                <td>
+                    <a href="/visit_delete/{{f.id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"  title="Delete">Delete</i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <h4 class="text-center alert alert-warning">No records</h4>
+    {% endif %}
+</center>
+ 
+</body>
+</html>
+    
