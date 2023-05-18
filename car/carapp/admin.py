@@ -91,18 +91,7 @@ class PaymentAdmin(admin.ModelAdmin):
      
     # prepopulated_fields={'slug':('name',)}
 admin.site.register(Payment,PaymentAdmin)
-# class staffloginAdmin(admin.ModelAdmin):
-#     list_display=['username']
-#     exclude=('password',)
-#     def has_add_permission(self, request, obj=None):
-#         return False
-#     # def has_change_permission(self, request, obj=None):
-#     #     return False
 
-#     def has_delete_permission(self, request, obj=None):
-#         return False
-#     verbose_name_plural = "Staff Login Details"
-# admin.site.register(staff,staffloginAdmin)
 
 admin.site.unregister(Group)
 admin.site.unregister(User)
