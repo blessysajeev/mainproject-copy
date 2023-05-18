@@ -12,10 +12,6 @@ from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from django.http import HttpResponse
 from sklearn.preprocessing import LabelEncoder
-import pickle
-import pandas as pd
-import numpy as np
-from django.http import JsonResponse
 import razorpay
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -431,92 +427,4 @@ def calculate_emi(loan_amount, loan_tenure, interest_rate):
     emi = loan_amount * r * ((1 + r) ** n) / (((1 + r)  ** n) - 1)
     return round(emi, 2)
 
-# USED CAR PRICE PREDICTION
 
-def predict(request):
-    car = pd.read_csv('Cleaned_Car_data.csv')
-    data={}
-    for i in ['name','year','company','fuel_type']:
-        data[i]=car[i].unique()
-    
-    context={
-        'name':data['name'],
-        'company':data['company'],
-        'year':data['year'],
-        'fuel_type':data['fuel_type']
-    }
-
-    return render(request, 'predict.html',context)
-
-def predict_price(request):
-    # Load the saved linear regression model
-    model = pickle.load(open('LinearRegressionModel.pkl', 'rb'))
-    # Load the cleaned car data
-    car = pd.read_csv('Cleaned_Car_data.csv')
-    # Get unique values of company and name columns
-    companies = car['company'].unique()
-    names = car['name'].unique()
-    fuel_type = car['fuel_type'].unique()
-    # Get the form data
-    if request.method=='POST':
-        company = request.POST['company']
-        car_model = request.POST['name']
-        year = int(request.POST['year'])
-        fuel_type = request.POST['fuel_type']
-        kms_driven = int(request.POST['kms_driven'])
-    # Make a prediction using the model
-        prediction = model.predict(pd.DataFrame(columns=['name', 'company', 'year', 'kms_driven', 'fuel_type'],
-                                                data=[[car_model, company, year, kms_driven, fuel_type]]))
-     # Pass the context variables to the HTML template
-        context = {
-        'companies': companies,
-        'names': names,
-        'fuel_type' : fuel_type,
-        'prediction': round(prediction[0], 2),
-        'cols':car.columns
-    }
-    # Return the prediction as a JSON response
-        return render(request, 'result.html', context)
-
-    
-
-
-
-
-
-# def signup(request):
-#     if request.method == 'POST':
-#         role=request.POST['role']
-#         email=request.POST['email']
-#         username = email.split('@')[0]
-#         phonenumber=request.POST['phonenumber']
-#         address=request.POST['address']
-#         city=request.POST['city']
-#         pincode=request.POST['pincode']
-        
-#         password = request.POST['password']
-#         cpassword = request.POST['cpassword']
-#         print('one')
-#         is_customer= is_staff = False
-#         if role=='is_customer':
-#             is_customer=True
-        
-#         else:
-#             is_staff=True
-         
-#         if password==cpassword:
-        
-#             if Account.objects.filter(email=email).exists():
-
-#                 messages.info(request,'email already taken')
-#                 return redirect('login')
-#             else:
-#                 user=Account.objects.create_user(username=username,phonenumber=phonenumber,email=email,address=address,city=city,pincode=pincode,district=district,password=password,is_child=is_child,is_ashaworker=is_ashaworker,is_hospital=is_hospital,is_PHC=is_PHC)
-#                 user.save()
-#                 messages.success(request, 'Thank you for registering with us. Please Login')
-#                 return redirect('login')
-#         else:
-#               print("password is not matching")
-#     else:   
-#               # return redirect('index.html')
-#      return render(request,'register.html')
